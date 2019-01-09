@@ -29,7 +29,7 @@ en la lista
 bool removeCar( std::string license );
 /*!
 \brief Busca un coche en el parque del cliente
-@returns el coche en cuestión, NULL si no lo encuentra.
+@returns el coche en cuestión, NULL si no lo encuentra...
 */
 Coche* searchCar( std::string license );
 virtual ~Cliente(void);
