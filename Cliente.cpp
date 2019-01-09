@@ -15,9 +15,9 @@ void addMoney( unsigned int amount );
 void expendMoney( unsigned int amount );
 unsigned int getMoneyAmount();
 /*!
-\brief Añade un nuevo coche
-@returns true si se añade correctamente, false si el coche ya
-estaba añadido
+\brief AÃ±ade un nuevo coche
+@returns true si se aÃ±ade correctamente, false si el coche ya
+estaba aÃ±adido
 */
 bool addCar( Coche* car );
 /*!
@@ -29,7 +29,7 @@ en la lista
 bool removeCar( std::string license );
 /*!
 \brief Busca un coche en el parque del cliente
-@returns el coche en cuestión, NULL si no lo encuentra
+@returns el coche en cuestiÃ³n, NULL si no lo encuentra.
 */
 Coche* searchCar( std::string license );
 virtual ~Cliente(void);
