@@ -1,51 +1,69 @@
-/*!
-\brief Busca un coche en el parque del cliente
-@returns el coche en cuestión, NULL si no lo encuentra
+#include <string.h>
+class Coche
+{
+/*! Posibles estados del coche */
+enum status {
+_status_ok, /*!< Situación normal */
+_status_broken, /*!< El coche debe ir al taller */
+_status_repairing, /*!< El coche está siendo reparado en el taller
 */
-Coche* searchCar( std::string license )
-6
+_status_ready /*!< El coche ha sido reparado y el dueño puede
+recogerlo */
+};
+private:
+std::string _license;
+status _status;
+unsigned int price;
+public:
+Coche( std::string license );
+virtual ~Coche(void);
+int getPrice();
+4
+// status methods
+bool isOk();
+void toggleOk();
+bool isBroken();
+void toggleBroken();
+bool isRepairing();
+void toggleRepairing();
+bool isReady();
+void toggleReady();
+};
+#include "Coche.h"
+#include "Cliente.h"
+class Concesionario
 {
-std::vector< Coche* >::iterator search_pos = _cars.begin();
-while( search_pos != _cars.end() )
-{
-if( (*search_pos)->getLicense() == license ) // encontrado!
-return &*search_pos;
-search_pos++;
-}
-return NULL;
-}
+private:
+std::vector< Coche* > _stock;
+std::vector< Coche* > _repairing;
+public:
+Concesionario(void);
+~Concesionario(void);
 /*!
-\brief Elimina un coche del parque del cliente
-@returns true si se Elimina correctamente, false si no estaba en la
-lista
+\brief Añade un nuevo coche al inventario
+@returns false si el coche ya estaba en el inventario o en el
+taller
 */
-bool removeCar( std::string license )
-{
-Coche* borrable = NULL;
-if( ( borrable = searchCar( car->getLicense() ) ) != NULL )
-{
-// el coche está en la lista, lo borro
-std::vector< Coche* >::iterator position = std::find(
-_cars.begin(), _cars.end(), borrable );
-_cars.erase( position );
-return true;
-}
-// no se encontró el coche
-return false;
-}
+bool addCarToStock( Coche* car );
 /*!
-\brief Añade un nuevo coche
-@returns true si se añade correctamente, false si el coche ya estaba
-añadido
+\brief Vende un coche del inventario al usuario y lo añade a
+su lista de coches
+Tras ejecutar esta función se quita el coche del inventario
+@returns false si el coche no está en inventario o el cliente
+no puede pagarlo
 */
-bool addCar( Coche* car )
-{
-if( searchCar( car->getLicense() ) == NULL )
-{
-// el coche no está en la lista, lo añado
-_cars.push_back( car );
-return true;
-}
-// el coche ya estaba en la lista
-return false;
-}
+bool sellCar( Cliente* client, std::string license );
+/*!
+\brief Toma un coche averiado del cliente y lo añade al taller
+@returns false si el cliente no tiene ese coche o el coche no
+está averiado
+*/
+bool checkCarInGarage( Cliente* client, std::string license );
+/*!
+\brief Toma un coche listo del taller y se lo devuelve al
+cliente
+@returns false si el coche no está en el taller y en estado de
+listo
+*/
+bool retrieveCarFromGarage( Cliente* cliente, std::string license );
+};
